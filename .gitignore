@@ -1,0 +1,24 @@
+# Python / ML
+__pycache__/
+*.py[cod]
+.venv/
+.uv/
+.pytest_cache/
+.ruff_cache/
+mlruns/
+artifacts/
+data/processed/
+*.pkl
+
+# DVC local state (commit dvc.yaml + dvc.lock, not these)
+.dvc/cache/
+.dvc/tmp/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Secrets — never commit real ones; .env.example only
+.env

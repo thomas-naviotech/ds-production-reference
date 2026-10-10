@@ -1,0 +1,19 @@
+# Pluggable run config: gradient-boosting challenger (same schema as logreg.yaml).
+seed: 42
+target: "Survived"
+
+paths:
+  raw_csv: "data/raw/Titanic-Dataset.csv"
+  processed_csv: "data/processed/titanic_features.csv"
+  artifacts_dir: "artifacts"
+  mlflow_uri: "sqlite:///mlruns/mlflow.db"
+  mlflow_experiment: "titanic-survival"
+
+split:
+  test_size: 0.2
+  stratify: true
+
+model:
+  name: "gb"
+  params:
+    n_estimators: 100

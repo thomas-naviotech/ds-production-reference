@@ -1,0 +1,20 @@
+# Pluggable run config: SVM challenger (same schema as logreg.yaml).
+# probability=True is forced by DEFAULT_PARAMS so predict_proba + ROC AUC work.
+seed: 42
+target: "Survived"
+
+paths:
+  raw_csv: "data/raw/Titanic-Dataset.csv"
+  processed_csv: "data/processed/titanic_features.csv"
+  artifacts_dir: "artifacts"
+  mlflow_uri: "sqlite:///mlruns/mlflow.db"
+  mlflow_experiment: "titanic-survival"
+
+split:
+  test_size: 0.2
+  stratify: true
+
+model:
+  name: "svm"
+  params:
+    C: 1.0

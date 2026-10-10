@@ -1,0 +1,37 @@
+# Shared pipeline parameters (also readable without DVC installed).
+seed: 42
+
+split:
+  test_size: 0.2
+  stratify: true
+
+prepare:
+  raw_csv: "data/raw/Titanic-Dataset.csv"
+  processed_csv: "data/processed/titanic_features.csv"
+
+artifacts_dir: "artifacts"
+
+mlflow:
+  uri: "sqlite:///mlruns/mlflow.db"
+  experiment: "titanic-survival"
+
+serve:
+  host: "127.0.0.1"
+  port: 8000
+
+models:
+  logreg:
+    max_iter: 1000
+  rf:
+    n_estimators: 300
+  svm:
+    C: 1.0
+  knn:
+    n_neighbors: 5
+  nb: {}
+  gb:
+    n_estimators: 100
+  xgb:
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.05

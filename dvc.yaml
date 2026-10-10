@@ -1,0 +1,39 @@
+stages:
+  prepare:
+    cmd: python scripts/prepare.py
+    deps:
+      - data/raw/Titanic-Dataset.csv
+      - scripts/prepare.py
+      - src/titanic_prod/data.py
+    params:
+      - params.yaml:
+          - seed
+          - prepare
+    outs:
+      - data/processed/titanic_features.csv:
+          persist: true
+
+  train:
+    cmd: python scripts/train.py --config configs/logreg.yaml
+    deps:
+      - data/processed/titanic_features.csv
+      - configs/logreg.yaml
+      - src/titanic_prod/train.py
+      - src/titanic_prod/features.py
+    params:
+      - params.yaml:
+          - seed
+          - split
+          - models
+    outs:
+      - artifacts/:
+          persist: true
+
+  evaluate:
+    cmd: python scripts/evaluate.py
+    deps:
+      - artifacts/model.pkl
+      - src/titanic_prod/evaluate.py
+    metric:
+      metrics.json:
+        persist: true
