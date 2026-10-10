@@ -84,13 +84,25 @@ data/raw/       Titanic-Dataset.csv (same file as class)
 notebooks/      drop the S05–S06 class notebooks here for side-by-side reading
 ```
 
-## Attribution
+## Full production mock — roadmap note
 
-Repo layout inspired by
-[krishnaik06/mlproject](https://github.com/krishnaik06/mlproject) and the
-end-to-end NLP/MLOps project pattern from Krish Naik's open-source work.
-All code here is written fresh for this course (MIT). If you borrow his
-repos directly, note they are GPL-3.0 — keep the attribution and license.
+This repo is deliberately a *local* production shape. To mock a full
+production system, add one layer at a time, in this order:
+
+| Capability | Here now | Add next |
+|---|---|---|
+| CI/CD pipelines | GitHub Actions (`ci.yml`: lint + tests + train smoke) | Matrix builds, Docker build job; alternative: CircleCI |
+| Experiment tracking | MLflow (local sqlite) | Remote tracking server + model registry stages |
+| Data/pipeline versioning | `params.yaml` + `dvc.yaml` skeleton | `dvc repro` with remote storage (S3/GCS/Azure Blob) |
+| Workflow orchestration | `scripts/` run manually, in order | Airflow DAGs; heavier flows: Kubeflow Pipelines |
+| Model serving | FastAPI + `uvicorn` locally | BentoML or AWS SageMaker endpoints |
+| Deployment targets | `Dockerfile` (local demo image) | AWS / Azure / GCP + Kubernetes manifests, one env at a time |
+| Monitoring | `metrics.json` per run | Evidently AI (drift reports) + Grafana dashboards on serving metrics |
+
+Rule: promote a layer only when the class can explain *why the current
+layer hurts* — e.g. add Airflow when manual script order actually breaks,
+add Grafana when nobody notices a stale model. Each row is one standalone
+exercise; none of them changes `src/` contracts.
 
 ## Next step
 
