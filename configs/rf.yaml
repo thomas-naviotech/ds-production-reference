@@ -16,4 +16,4 @@ split:
 model:
   name: "rf"
   params:
-    n_estimators: 3000
+    n_estimators: 300
